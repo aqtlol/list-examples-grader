@@ -17,7 +17,14 @@ public class TestListExamples {
       list.add("pineapple");
       list.add("grapes");
 
-      StringChecker sc = new ListExamples();
+      StringChecker sc = new StringChecker() {
+        public boolean checkString(String s) {
+          if(s.contains("i")) {
+            return true;
+          }
+          return false;
+        }
+      };
 
       List<String> expected = new ArrayList<>(); // new String[] {"strawberry", "pineapple"}
       expected.add("strawberry");
