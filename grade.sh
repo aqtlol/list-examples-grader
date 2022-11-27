@@ -39,6 +39,8 @@ if [[ $? -ne 0 ]]; then
 fi
 echo "Compiled"
 
+echo "--> Beginning tests now <--"
+
 java -cp $JU org.junit.runner.JUnitCore TestListExamples > JunitOut.txt
 
 grep -q "2 tests" JunitOut.txt
