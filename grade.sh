@@ -10,10 +10,13 @@ git clone $1 student-submission
 echo "Successful clone"
 
 FILE=student-submission/ListExamples.java
+
 if  [ -f "$FILE" ]; then
     echo "file exists"
 else
-    echo "file doesnt exist"
+    echo "ListExamples.java was not found."
+    echo "You recieve a score of: 0 / 2"
+    echo "Check that your file is named properly and that your file is not nested."
     exit 1
 fi
 
@@ -24,14 +27,31 @@ cp TestListExamples.java student-submission/
 cd student-submission
 echo "In student-submission"
 
-javac -cp $JU *.java 2> compileError.txt
-cat compileError.txt
-set -e
+# Score of the tests. Starts at value 0 and increases
+# when qualifications are met.
+# out of 2
+SCORE=0
+
+javac -cp $JU *.java 2> CompileErr.txt
+if [[ $? -ne 0 ]]; then
+    echo "Your code did not compile. You recieve a $SCORE."
+    exit 1
+fi
 echo "Compiled"
 
-java -cp $JU org.junit.runner.JUnitCore TestListExamples
+java -cp $JU org.junit.runner.JUnitCore TestListExamples > JunitOut.txt
 
-echo "Ran da tests"
+grep -q "2 tests" JunitOut.txt
+if [[ $? -eq 0 ]]; then
+    SCORE=2
+fi
+grep -q "1 tests" JunitOut.txt
+if [[ $? -eq 0 ]]; then
+    SCORE=1
+fi
+
+
+echo "Your score is: $SCORE / 2"
 
 
 
