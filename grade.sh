@@ -34,7 +34,7 @@ SCORE=0
 
 javac -cp $JU *.java 2> CompileErr.txt
 if [[ $? -ne 0 ]]; then
-    echo "Your code did not compile. You recieve a $SCORE."
+    echo "Your code did not compile. You recieve a $SCORE / 2"
     exit 1
 fi
 echo "Compiled"
@@ -54,6 +54,12 @@ fi
 
 
 echo "Your score is: $SCORE / 2"
+if [[ $SCORE -eq 2 ]]; then
+    echo "Great job! All tests passed!"
+fi
+if [[ $SCORE -eq 1 ]]; then
+    echo "Uh Oh! A test is failing! Revise your code."
+fi
 
 
 
